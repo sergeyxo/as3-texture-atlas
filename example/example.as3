@@ -1,0 +1,51 @@
+package 
+{
+	import com.nooslab.texture.TextureAtlas;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
+	
+	/**
+	 * ...
+	 * @author ho4040@nooslab.com
+	 */
+	public class Main extends Sprite 
+	{
+		
+		public function Main():void 
+		{	
+			//make texture atlas with boxes
+			var size:int = 512;
+			var boxNum:int = 20;
+			
+			//make random size box
+			var boxes:Vector.<DisplayObject> = new Vector.<DisplayObject>
+			for ( var i:int = 0; i < boxNum; i++) {
+				boxes.push(makeRandomDisplayObject());
+			}
+			
+			//step 1. push all display object
+			var textureAtals:TextureAtlas = new TextureAtlas(size);
+			textureAtals.push(boxes);			
+			
+			//step 2. make bitmapData from texture atals
+			var bitmapData:BitmapData = new BitmapData(size, size, false, 0xFF00FF );
+			bitmapData.draw( textureAtals );
+			
+			//show
+			this.addChild( new Bitmap(bitmapData));
+		}
+		
+		
+		private function makeRandomDisplayObject():DisplayObject
+		{
+			var w:Number = Math.random() * 200 + 1
+			var h:Number = Math.random() * 200 + 1	
+			var randomColor:uint = Math.random()*0x88 << 16 | Math.random()*0x88 << 8 | Math.random()*0x88
+			var bitmap:Bitmap = new Bitmap(new BitmapData(w, h, false, randomColor));
+			return bitmap;
+		}
+	}
+	
+}
